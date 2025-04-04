@@ -4,282 +4,138 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Road Trip AI Assistant</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        
         rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        integrity="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"
         crossorigin="anonymous"
+        
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --whatsapp-green: #25D366;
-            --whatsapp-light-green: #DCF8C6;
-            --whatsapp-chat-bg: #E5DDD5;
-            --whatsapp-header-bg: #EDEDED;
-            --whatsapp-input-bg: #F0F0F0;
-            --whatsapp-time-color: #667781;
-            --whatsapp-text-dark: #3B4A54;
-        }
-
         body {
-            background-color: var(--whatsapp-chat-bg);
-            font-family: "Segoe UI", Helvetica Neue, Helvetica, Lucida Grande, Arial, sans-serif;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
+    background: linear-gradient(135deg, #1a2a3a, #fbfdff);
+    color: #e0e0e0;
+    font-family: 'Montserrat', 'Arial', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background-attachment: fixed;
+}
 
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-        }
+.chat-container {
+    max-width: 500px;
+    width: 100%;
+}
 
-        .chat-header {
-            background-color: var(--whatsapp-header-bg);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-        }
+.chat-box {
+    background: rgba(34, 42, 54, 0.8);
+    border-radius: 0; /* Removed border radius */
+    overflow: hidden;
+    box-shadow: 
+        0 15px 35px rgba(0,0,0,0.4),
+        0 5px 15px rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
 
-        .chat-header-info {
-            margin-left: 15px;
-            flex-grow: 1;
-        }
+#messages {
+    height: 60vh;
+    overflow-y: auto;
+    padding: 15px;
+    background: rgba(25,33,43,0.7);
+}
 
-        .chat-header h2 {
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0;
-            color: var(--whatsapp-text-dark);
-        }
+.user-message, .ai-message {
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    max-width: 85%;
+    word-wrap: break-word;
+    border-radius: 0; /* Removed border radius */
+}
 
-        .chat-header p {
-            font-size: 13px;
-            margin: 0;
-            color: var(--whatsapp-time-color);
-        }
+.user-message {
+    background: linear-gradient(135deg, #3182ce, #2c5282);
+    color: white;
+    margin-left: auto;
+}
 
-        .chat-container {
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            background-image: url('https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png');
-            background-repeat: repeat;
-        }
+.ai-message {
+    background: linear-gradient(135deg, #ecc94b, #d69e2e);
+    color: #1a202c;
+}
 
-        #messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-            scroll-behavior: smooth;
-        }
+.input-group {
+    background: rgba(45,55,72,0.8);
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
 
-        #messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        #messages::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-        }
+.form-control {
+    background: rgba(74,85,104,0.5);
+    border: none;
+    color: white;
+    border-radius: 0; /* Removed border radius */
+}
 
-        .message {
-            max-width: 70%;
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 7.5px;
-            position: relative;
-            word-wrap: break-word;
-            line-height: 1.4;
-        }
+.btn-send {
+    border-radius: 0; /* Removed border radius */
+}
 
-        .message-time {
-            font-size: 11px;
-            color: var(--whatsapp-time-color);
-            float: right;
-            margin-left: 8px;
-            margin-top: 2px;
-        }
+.btn-send:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, #ed8936, #f6ad55);
+}
 
-        .user-message {
-            background-color: var(--whatsapp-light-green);
-            align-self: flex-end;
-            border-top-right-radius: 0;
-            margin-right: 15px;
-        }
+.road-icon {
+    display: inline-block;
+    animation: bounce 2s infinite;
+}
 
-        .ai-message {
-            background-color: white;
-            align-self: flex-start;
-            border-top-left-radius: 0;
-            margin-left: 15px;
-        }
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
 
-        .ai-message::before, .user-message::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 0;
-            height: 0;
-            border-style: solid;
-        }
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .chat-container {
+        margin: 0 15px;
+    }
+    
+    .user-message, .ai-message {
+        max-width: 90%;
+    }
+}
+.ai-message .message-content .line {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-bottom: 5px;
+}
 
-        .ai-message::before {
-            left: -8px;
-            border-width: 0 8px 8px 0;
-            border-color: transparent white transparent transparent;
-        }
-
-        .user-message::before {
-            right: -8px;
-            border-width: 0 0 8px 8px;
-            border-color: transparent transparent transparent var(--whatsapp-light-green);
-        }
-
-        .input-container {
-            background-color: var(--whatsapp-input-bg);
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            border-top: 1px solid #ddd;
-        }
-
-        .message-input {
-            flex: 1;
-            border-radius: 20px;
-            border: none;
-            padding: 10px 15px;
-            font-size: 15px;
-            background-color: white;
-            margin: 0 10px;
-            outline: none;
-        }
-
-        .send-button {
-            background-color: var(--whatsapp-green);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .send-button:hover {
-            background-color: #128C7E;
-        }
-
-        .send-button:disabled {
-            background-color: #A5A5A5;
-            cursor: not-allowed;
-        }
-
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            margin-left: 15px;
-            margin-bottom: 10px;
-            background-color: white;
-            padding: 8px 12px;
-            border-radius: 7.5px;
-            width: fit-content;
-            border-top-left-radius: 0;
-        }
-
-        .typing-indicator::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -8px;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 0 8px 8px 0;
-            border-color: transparent white transparent transparent;
-        }
-
-        .typing-dots {
-            display: flex;
-            margin-left: 4px;
-        }
-
-        .typing-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #999;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typingAnimation 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingAnimation {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-
-        .status-icon {
-            font-size: 12px;
-            margin-left: 4px;
-            color: var(--whatsapp-time-color);
-        }
-
-        .message-status {
-            display: flex;
-            align-items: center;
-        }
-
-        .road-icon {
-            font-size: 24px;
-            color: var(--whatsapp-green);
-        }
+.ai-message .message-content .line:nth-child(1) {
+    opacity: 1;
+}
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <div class="chat-header">
-            <div class="road-icon">🛣️</div>
-            <div class="chat-header-info">
-                <h2>Road Trip AI Assistant</h2>
-                <p>Online</p>
-            </div>
-        </div>
-        
-        <div class="chat-container">
-            <div id="messages">
+    <div class="container chat-container">
+        <h2 class="text-center text-warning">
+            <span class="road-icon">🛣️</span>Road Trip AI Assistant
+        </h2>
+        <div class="chat-box">
+            <div id="messages" class="overflow-auto">
                 <div class="ai-message">
-                    Hello! I'm your AI Road Trip Assistant. How can I help you with your journey today?
-                    <!-- <span class="message-time">${getCurrentTime()}</span> -->
+                    <small class="text-decoration-underline">Trip Assistant</small>
+                    <p>Hello! I'm your AI Road Trip Assistant. How can I help you with your journey today?</p>
                 </div>
             </div>
-            
-            <div class="input-container">
-                <i class="fas fa-paperclip" style="font-size: 20px; color: #666; cursor: pointer;"></i>
-                <input type="text" id="inputPrompt" class="message-input" placeholder="Type a message" />
-                <button class="send-button" id="sendPromptBtn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
+            <div class="input-group">
+                <input type="text" id="inputPrompt" class="form-control" placeholder="Ask about routes, stops, or travel tips..." />
+                <button class="btn btn-warning btn-send" id="sendPromptBtn">Send</button>
             </div>
         </div>
     </div>
@@ -292,8 +148,7 @@
 
             // Handle Enter key press
             inputPrompt.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
+                if (e.key === 'Enter') {
                     getResponse();
                 }
             });
@@ -301,24 +156,22 @@
             // Handle button click
             sendPromptBtn.addEventListener('click', getResponse);
 
-            // Enable/disable send button based on input
-            inputPrompt.addEventListener('input', function() {
-                sendPromptBtn.disabled = !inputPrompt.value.trim();
-            });
-
             async function getResponse() {
                 const promptValue = inputPrompt.value.trim();
                 if (!promptValue) return;
 
                 // Add user message to chat
-                addMessage(promptValue, 'user');
+                messages.innerHTML += `<div class="user-message">
+                    <small class="text-decoration-underline">You</small>
+                    <p>${promptValue}</p>
+                </div>`;
                 
                 // Clear input and disable button
                 inputPrompt.value = "";
                 sendPromptBtn.disabled = true;
-                
-                // Show typing indicator
-                const typingIndicator = showTypingIndicator();
+                sendPromptBtn.innerHTML = `Sending <div class="spinner-border spinner-border-sm" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>`;
                 
                 scrollToBottom();
 
@@ -339,9 +192,10 @@
 - Local dining options
 - Safety tips for long drives
 
-Be friendly and concise. Use bullet points when helpful. Format responses for mobile display.`;
+Be friendly and concise. Use bullet points when helpful.`;
 
-                    const response = await fetch(`http://localhost/api.php?role=${encodeURIComponent(roleValue)}&prompt=${encodeURIComponent(promptValue)}`);
+                    const response = await fetch(`api.php?role=${encodeURIComponent(roleValue)}&prompt=${encodeURIComponent(promptValue)}`);
+                    
                     if (!response.ok) {
                         throw new Error('API request failed');
                     }
@@ -356,400 +210,96 @@ Be friendly and concise. Use bullet points when helpful. Format responses for mo
                         throw new Error('Invalid API response format');
                     }
 
-                    // Remove typing indicator
-                    typingIndicator.remove();
-                    
                     // Add AI response to chat
-                    addMessage(data.choices[0].message.content, 'ai');
+                    messages.innerHTML += `<div class="ai-message">
+                        <small class="text-decoration-underline">Trip Assistant</small>
+                        <p>${data.choices[0].message.content}</p>
+                    </div>`;
                 } catch (error) {
                     console.error('Error:', error);
-                    // Remove typing indicator
-                    typingIndicator.remove();
-                    
-                    // Show error message
-                    addMessage(`Sorry, I encountered an error. Please try again later.\n\n<small>Error: ${error.message}</small>`, 'ai');
+                    messages.innerHTML += `<div class="ai-message">
+                        <small class="text-decoration-underline">Trip Assistant</small>
+                        <p>Sorry, I encountered an error. Please try again later.</p>
+                        <p><small>Technical details: ${error.message}</small></p>
+                    </div>`;
                 } finally {
+                    sendPromptBtn.innerHTML = "Send";
                     sendPromptBtn.disabled = false;
                     scrollToBottom();
                 }
             }
 
-            function addMessage(text, sender) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${sender}-message`;
-                
-                // Format newlines as <br> tags
-                const formattedText = text.replace(/\n/g, '<br>');
-                
-                messageDiv.innerHTML = `${formattedText} <span class="message-time">${getCurrentTime()}</span>`;
-                messages.appendChild(messageDiv);
-                scrollToBottom();
-            }
-
-            function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'typing-indicator';
-                typingDiv.innerHTML = `
-                    <span>Assistant is typing</span>
-                    <div class="typing-dots">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-                `;
-                messages.appendChild(typingDiv);
-                scrollToBottom();
-                return typingDiv;
-            }
-
             function scrollToBottom() {
                 messages.scrollTo({ top: messages.scrollHeight, behavior: 'smooth' });
             }
-
-            function getCurrentTime() {
-                const now = new Date();
-                let hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
-                return `${hours}:${minutes} ${ampm}`;
-            }
         });
-    </script>
-</body>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Road Trip AI Assistant</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-        crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        :root {
-            --whatsapp-green: #25D366;
-            --whatsapp-light-green: #DCF8C6;
-            --whatsapp-chat-bg: #E5DDD5;
-            --whatsapp-header-bg: #EDEDED;
-            --whatsapp-input-bg: #F0F0F0;
-            --whatsapp-time-color: #667781;
-            --whatsapp-text-dark: #3B4A54;
-        }
-
-        body {
-            background-color: var(--whatsapp-chat-bg);
-            font-family: "Segoe UI", Helvetica Neue, Helvetica, Lucida Grande, Arial, sans-serif;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-        }
-
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            max-width: 800px;
-            margin: 0 auto;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
-        }
-
-        .chat-header {
-            background-color: var(--whatsapp-header-bg);
-            padding: 10px 16px;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .chat-header-info {
-            margin-left: 15px;
-            flex-grow: 1;
-        }
-
-        .chat-header h2 {
-            font-size: 16px;
-            font-weight: 500;
-            margin: 0;
-            color: var(--whatsapp-text-dark);
-        }
-
-        .chat-header p {
-            font-size: 13px;
-            margin: 0;
-            color: var(--whatsapp-time-color);
-        }
-
-        .chat-container {
-            flex: 1;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            background-image: url('https://web.whatsapp.com/img/bg-chat-tile-light_a4be512e7195b6b733d9110b408f075d.png');
-            background-repeat: repeat;
-        }
-
-        #messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 20px 10px;
-            display: flex;
-            flex-direction: column;
-            scroll-behavior: smooth;
-        }
-
-        #messages::-webkit-scrollbar {
-            width: 6px;
-        }
-        #messages::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 3px;
-        }
-
-        .message {
-            max-width: 70%;
-            margin-bottom: 10px;
-            padding: 8px 12px;
-            border-radius: 7.5px;
-            position: relative;
-            word-wrap: break-word;
-            line-height: 1.4;
-        }
-
-        .message-time {
-            font-size: 11px;
-            color: var(--whatsapp-time-color);
-            float: right;
-            margin-left: 8px;
-            margin-top: 2px;
-        }
-
-        .user-message {
-            background-color: var(--whatsapp-light-green);
-            align-self: flex-end;
-            border-top-right-radius: 0;
-            margin-right: 15px;
-        }
-
-        .ai-message {
-            background-color: white;
-            align-self: flex-start;
-            border-top-left-radius: 0;
-            margin-left: 15px;
-        }
-
-        .ai-message::before, .user-message::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            width: 0;
-            height: 0;
-            border-style: solid;
-        }
-
-        .ai-message::before {
-            left: -8px;
-            border-width: 0 8px 8px 0;
-            border-color: transparent white transparent transparent;
-        }
-
-        .user-message::before {
-            right: -8px;
-            border-width: 0 0 8px 8px;
-            border-color: transparent transparent transparent var(--whatsapp-light-green);
-        }
-
-        .input-container {
-            background-color: var(--whatsapp-input-bg);
-            padding: 10px 15px;
-            display: flex;
-            align-items: center;
-            border-top: 1px solid #ddd;
-        }
-
-        .message-input {
-            flex: 1;
-            border-radius: 20px;
-            border: none;
-            padding: 10px 15px;
-            font-size: 15px;
-            background-color: white;
-            margin: 0 10px;
-            outline: none;
-        }
-
-        .send-button {
-            background-color: var(--whatsapp-green);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .send-button:hover {
-            background-color: #128C7E;
-        }
-
-        .send-button:disabled {
-            background-color: #A5A5A5;
-            cursor: not-allowed;
-        }
-
-        .typing-indicator {
-            display: flex;
-            align-items: center;
-            margin-left: 15px;
-            margin-bottom: 10px;
-            background-color: white;
-            padding: 8px 12px;
-            border-radius: 7.5px;
-            width: fit-content;
-            border-top-left-radius: 0;
-        }
-
-        .typing-indicator::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -8px;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 0 8px 8px 0;
-            border-color: transparent white transparent transparent;
-        }
-
-        .typing-dots {
-            display: flex;
-            margin-left: 4px;
-        }
-
-        .typing-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #999;
-            border-radius: 50%;
-            margin: 0 2px;
-            animation: typingAnimation 1.4s infinite ease-in-out;
-        }
-
-        .typing-dot:nth-child(1) {
-            animation-delay: 0s;
-        }
-        .typing-dot:nth-child(2) {
-            animation-delay: 0.2s;
-        }
-        .typing-dot:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        @keyframes typingAnimation {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-5px); }
-        }
-
-        .status-icon {
-            font-size: 12px;
-            margin-left: 4px;
-            color: var(--whatsapp-time-color);
-        }
-
-        .message-status {
-            display: flex;
-            align-items: center;
-        }
-
-        .road-icon {
-            font-size: 24px;
-            color: var(--whatsapp-green);
-        }
-    </style>
-</head>
-<body>
-    <div class="app-container">
-        <div class="chat-header">
-            <div class="road-icon">🛣️</div>
-            <div class="chat-header-info">
-                <h2>Road Trip AI Assistant</h2>
-                <p>Online</p>
-            </div>
-        </div>
-        
-        <div class="chat-container">
-            <div id="messages">
-                <div class="ai-message">
-                    Hello! I'm your AI Road Trip Assistant. How can I help you with your journey today?
-                    <!-- <span class="message-time">${getCurrentTime()}</span> -->
-                </div>
-            </div>
-            
-            <div class="input-container">
-                <i class="fas fa-paperclip" style="font-size: 20px; color: #666; cursor: pointer;"></i>
-                <input type="text" id="inputPrompt" class="message-input" placeholder="Type a message" />
-                <button class="send-button" id="sendPromptBtn">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const sendPromptBtn = document.getElementById('sendPromptBtn');
-            const inputPrompt = document.getElementById('inputPrompt');
-            const messages = document.getElementById('messages');
+    const sendPromptBtn = document.getElementById('sendPromptBtn');
+    const inputPrompt = document.getElementById('inputPrompt');
+    const messages = document.getElementById('messages');
 
-            // Handle Enter key press
-            inputPrompt.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    getResponse();
+    // Typing effect function
+    function typeWriter(element, text, speed = 20) {
+        return new Promise((resolve) => {
+            element.innerHTML = ''; // Clear existing content
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    // Split text into lines
+                    const lines = text.split('\n');
+                    let currentLineContent = '';
+                    lines.forEach((line, index) => {
+                        if (i >= lines.slice(0, index).join('\n').length) {
+                            currentLineContent += line.slice(0, i - lines.slice(0, index).join('\n').length + 1) + (i < text.length - 1 ? '' : '');
+                        }
+                    });
+                    
+                    element.innerHTML = lines.map((line, index) => 
+                        `<div class="line" style="opacity: ${index * 20 < i ? '1' : '0'}">${
+                            i >= lines.slice(0, index).join('\n').length 
+                            ? line.slice(0, i - lines.slice(0, index).join('\n').length + 1) 
+                            : ''
+                        }</div>`
+                    ).join('');
+                    
+                    i++;
+                    setTimeout(type, speed);
+                } else {
+                    resolve();
                 }
-            });
+            }
+            type();
+        });
+    }
 
-            // Handle button click
-            sendPromptBtn.addEventListener('click', getResponse);
+    // Modify the existing getResponse function
+    async function getResponse() {
+        const promptValue = inputPrompt.value.trim();
+        if (!promptValue) return;
 
-            // Enable/disable send button based on input
-            inputPrompt.addEventListener('input', function() {
-                sendPromptBtn.disabled = !inputPrompt.value.trim();
-            });
+        // Add user message to chat
+        messages.innerHTML += `<div class="user-message">
+            <small class="text-decoration-underline">You</small>
+            <p>${promptValue}</p>
+        </div>`;
 
-            async function getResponse() {
-                const promptValue = inputPrompt.value.trim();
-                if (!promptValue) return;
+        // Clear input and disable button
+        inputPrompt.value = "";
+        sendPromptBtn.disabled = true;
+        sendPromptBtn.innerHTML = `Sending <div class="spinner-border spinner-border-sm" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>`;
 
-                // Add user message to chat
-                addMessage(promptValue, 'user');
-                
-                // Clear input and disable button
-                inputPrompt.value = "";
-                sendPromptBtn.disabled = true;
-                
-                // Show typing indicator
-                const typingIndicator = showTypingIndicator();
-                
-                scrollToBottom();
+        scrollToBottom();
 
-                try {
-                    // First verify API endpoint is reachable
-                    const testResponse = await fetch('api.php?test=1');
-                    if (!testResponse.ok) {
-                        throw new Error('API endpoint not reachable');
-                    }
+        try {
+            // First verify API endpoint is reachable
+            const testResponse = await fetch('api.php?test=1');
+            if (!testResponse.ok) {
+                throw new Error('API endpoint not reachable');
+            }
 
-                    const roleValue = `You are an expert Road Trip Assistant named Miles. Provide helpful advice about:
+            const roleValue = `You are an expert Road Trip Assistant named Miles. Provide helpful advice about:
 - Route planning and optimization
 - Scenic routes and attractions
 - Rest stop recommendations
@@ -759,83 +309,66 @@ Be friendly and concise. Use bullet points when helpful. Format responses for mo
 - Local dining options
 - Safety tips for long drives
 
-Be friendly and concise. Use bullet points when helpful. Format responses for mobile display.`;
+Respond in a clear, line-by-line format that's easy to read.`;
 
-                    const response = await fetch(`http://localhost/api.php?role=${encodeURIComponent(roleValue)}&prompt=${encodeURIComponent(promptValue)}`);
-                    if (!response.ok) {
-                        throw new Error('API request failed');
-                    }
+            const response = await fetch(`api.php?role=${encodeURIComponent(roleValue)}&prompt=${encodeURIComponent(promptValue)}`);
 
-                    const data = await response.json();
-                    
-                    if (data.error) {
-                        throw new Error(data.error);
-                    }
-
-                    if (!data.choices || !data.choices[0]?.message?.content) {
-                        throw new Error('Invalid API response format');
-                    }
-
-                    // Remove typing indicator
-                    typingIndicator.remove();
-                    
-                    // Add AI response to chat
-                    addMessage(data.choices[0].message.content, 'ai');
-                } catch (error) {
-                    console.error('Error:', error);
-                    // Remove typing indicator
-                    typingIndicator.remove();
-                    
-                    // Show error message
-                    addMessage(`Sorry, I encountered an error. Please try again later.\n\n<small>Error: ${error.message}</small>`, 'ai');
-                } finally {
-                    sendPromptBtn.disabled = false;
-                    scrollToBottom();
-                }
+            if (!response.ok) {
+                throw new Error('API request failed');
             }
 
-            function addMessage(text, sender) {
-                const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${sender}-message`;
-                
-                // Format newlines as <br> tags
-                const formattedText = text.replace(/\n/g, '<br>');
-                
-                messageDiv.innerHTML = `${formattedText} <span class="message-time">${getCurrentTime()}</span>`;
-                messages.appendChild(messageDiv);
-                scrollToBottom();
+            const data = await response.json();
+
+            if (data.error) {
+                throw new Error(data.error);
             }
 
-            function showTypingIndicator() {
-                const typingDiv = document.createElement('div');
-                typingDiv.className = 'typing-indicator';
-                typingDiv.innerHTML = `
-                    <span>Assistant is typing</span>
-                    <div class="typing-dots">
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                        <div class="typing-dot"></div>
-                    </div>
-                `;
-                messages.appendChild(typingDiv);
-                scrollToBottom();
-                return typingDiv;
+            if (!data.choices || !data.choices[0]?.message?.content) {
+                throw new Error('Invalid API response format');
             }
 
-            function scrollToBottom() {
-                messages.scrollTo({ top: messages.scrollHeight, behavior: 'smooth' });
-            }
+            // Create AI message container with line-by-line typing
+            const aiMessageContainer = document.createElement('div');
+            aiMessageContainer.className = 'ai-message';
+            aiMessageContainer.innerHTML = `<small class="text-decoration-underline">Trip Assistant</small>
+                <div class="message-content"></div>`;
+            
+            messages.appendChild(aiMessageContainer);
+            
+            const messageContent = aiMessageContainer.querySelector('.message-content');
+            
+            // Apply typing effect
+            await typeWriter(messageContent, data.choices[0].message.content);
 
-            function getCurrentTime() {
-                const now = new Date();
-                let hours = now.getHours();
-                const minutes = now.getMinutes().toString().padStart(2, '0');
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // the hour '0' should be '12'
-                return `${hours}:${minutes} ${ampm}`;
-            }
-        });
+        } catch (error) {
+            console.error('Error:', error);
+            messages.innerHTML += `<div class="ai-message">
+                <small class="text-decoration-underline">Trip Assistant</small>
+                <p>Sorry, I encountered an error. Please try again later.</p>
+                <p><small>Technical details: ${error.message}</small></p>
+            </div>`;
+        } finally {
+            sendPromptBtn.innerHTML = "Send";
+            sendPromptBtn.disabled = false;
+            scrollToBottom();
+        }
+    }
+
+    function scrollToBottom() {
+        messages.scrollTo({ top: messages.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Handle Enter key press
+    inputPrompt.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            getResponse();
+        }
+    });
+
+    // Handle button click
+    sendPromptBtn.addEventListener('click', getResponse);
+});
+
     </script>
 </body>
 </html>
