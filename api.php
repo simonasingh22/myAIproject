@@ -24,7 +24,8 @@ if (isset($_GET['role']) && isset($_GET['prompt'])) {
     }
 
     $api_url = "https://api.groq.com/openai/v1/chat/completions";
-    $api_key = "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"; 
+    $api_key = "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"; // REPLACE WITH YOUR ACTUAL API KEY
+
     $data = [
         "model" => "llama3-70b-8192",
         "messages" => [
